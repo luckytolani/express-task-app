@@ -5,7 +5,6 @@ export const createTaskService = async (taskObj) => {
     const task = new Task({
       ...taskObj,
     });
-
     return { status: true, data: await task.save() };
   } catch (error) {
     return { status: false, error };
@@ -14,36 +13,45 @@ export const createTaskService = async (taskObj) => {
 
 export const getTaskService = async (filter) => {
   try {
-    let data = await Task.findOne({ ...filter });
+    let data = await Task.find({ ...filter });
 
     if (data) return { status: true, message: "Success", data };
 
-    return { status: false, message: "User Not Found" };
+    return { status: false, message: "Task Not Found" };
   } catch (error) {
     return { status: false, message: "DB Error", error };
   }
 };
 
-// export const updateUserService = async (email, updateObj) => {
-//   try {
-//     let updateRes = User.findOneAndUpdate({ email }, { ...updateObj });
+export const updateTaskService = async (updateObj) => {
+  try {
+    let updateRes = await Task.findOneAndUpdate(
+      { _id: updateObj._id },
+      { ...updateObj }
+    );
+    if (updateRes)
+      return {
+        status: true,
+        message: "Success",
+      };
 
-//     if (updateRes) return { status: true, message: "Success", data: updateRes };
+    return { status: false, message: "Task Not Found" };
+  } catch (error) {
+    console.log(789);
+    return { status: false, message: "DB Error", error };
+  }
+};
 
-//     return { status: false, message: "User Not Found" };
-//   } catch (error) {
-//     return { status: false, message: "DB Error", error };
-//   }
-// };
+export const deleteTaskService = async (id) => {
+  try {
+    let deleteRes = await Task.deleteOne({ id });
 
-// export const deleteUserService = async (email) => {
-//   try {
-//     let deleteRes = User.findOneAndDelete({ email });
+    console.log(deleteRes);
 
-//     if (deleteRes) return { status: true, message: "Success" };
+    if (deleteRes.deletedCount) return { status: true, message: "Success" };
 
-//     return { status: false, message: "User Not Found" };
-//   } catch (error) {
-//     return { status: false, message: "DB Error", error };
-//   }
-// };
+    return { status: false, message: "Task not Founds" };
+  } catch (error) {
+    return { status: false, message: "DB Error", error };
+  }
+};

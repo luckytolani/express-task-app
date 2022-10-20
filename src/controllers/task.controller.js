@@ -26,4 +26,37 @@ export const getTask = async (req, res, next) => {
   }
 };
 
-// export const getUser = (_req, _res, _next) => {};
+export const updateTask = async (req, res, next) => {
+  try {
+    if (!req?.body?._id)
+      return res.json({ status: false, message: "Id not available" });
+
+    let updateRes = await taskService.updateTaskService(req?.body);
+
+    if (updateRes?.status)
+      return res.json({ ...updateRes, message: "Success" });
+    else return res.json({ message: "DB_ERROR", ...updateRes });
+  } catch (error) {
+    console.log(error);
+    console.log(error);
+    return res.json({ status: false, message: "DBError", error });
+  }
+};
+
+export const deleteTask = async (req, res, next) => {
+  try {
+    let id = req.params.id;
+
+    if (!id) return res.json({ status: false, message: "Id not available" });
+
+    let deleteRes = await taskService.deleteTaskService(id);
+
+    if (deleteRes?.status)
+      return res.json({ ...deleteRes, message: "Success" });
+    else return res.json({ message: "DB_ERROR", ...deleteRes });
+  } catch (error) {
+    console.log(error);
+    console.log(error);
+    return res.json({ status: false, message: "DBError", error });
+  }
+};
