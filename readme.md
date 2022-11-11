@@ -1,5 +1,6 @@
 ## Steps to run this code
 **Step 1** Build a Image :- `docker build -t todoapp:1.0 .`
+
 **Step2**  `cd ./k8_yaml`
 
 Run kubectl commands:-
