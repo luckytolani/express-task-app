@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as taskService from "../services/task.service.js";
 
 export const createTask = async (req, res, next) => {
@@ -16,7 +17,10 @@ export const createTask = async (req, res, next) => {
 
 export const getTask = async (req, res, next) => {
   try {
-    let getRes = await taskService.getTaskService(req?.body || {});
+    let getRes = await taskService.getTaskService({})
+    // console.log(data.data.data);
+
+    console.log(getRes)
 
     if (getRes?.status) return res.json({ ...getRes, message: "Success" });
     else return res.json({ ...getRes, message: "DB_ERROR" });

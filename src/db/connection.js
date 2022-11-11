@@ -2,7 +2,7 @@ import { environment } from "../../config.js";
 import mongoose from "mongoose";
 
 mongoose.connect(
-  environment.MONGO,
+  'mongodb://username:password@mongodb-service:27017/m2pTask?authSource=admin',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

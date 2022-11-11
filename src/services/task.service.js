@@ -1,4 +1,5 @@
 import { Task } from "../model/task.js";
+import "./../db/connection.js";
 
 export const createTaskService = async (taskObj) => {
   try {
